@@ -10,16 +10,16 @@ import {
     Rate
 } from './styles';
 
-function SliderItem() {
+function SliderItem({ data, navigatePage }) {
     return (
-        <Container activeOpacity={0.7}>
+        <Container activeOpacity={0.7} onPress={() => navigatePage(data)}>
             <BannerItem
-                source={{ uri: 'https://images.unsplash.com/photo-1602461601079-fb03b7b35e61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80' }}
+                source={{ uri: `https://image.tmdb.org/t/p/original/${data.poster_path}` }}
             />
-            <Title numberOfLines={1}> Vingadores Vingadores Vingadores Vingadores</Title>
+            <Title numberOfLines={1}>{data.title}</Title>
             <RateContainer>
-                <Ionicons name='md-star' size={12} color='#E7A74E'/>
-                <Rate>9/10</Rate>
+                <Ionicons name='md-star' size={12} color='#E7A74E' />
+                <Rate>{data.vote_average}/10</Rate>
             </RateContainer>
         </Container>
     );

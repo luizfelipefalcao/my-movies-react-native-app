@@ -17,10 +17,10 @@ export const SearchContainer = styled.View`
 export const Input = styled.TextInput`
     background-color: rgba(255, 255, 255, 0.4);
     width: 85%;
-    height: 50;
+    height: 50px;
     border-radius: 50px;
     padding: 8px 15px;
-    font-size: 18;
+    font-size: 18px;
     color: #FFF;
 `;
 
