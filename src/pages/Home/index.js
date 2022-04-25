@@ -28,6 +28,7 @@ export default function Home() {
   const [topMovies, setTopMovies] = useState([]);
   const [bannerMovie, setBannerMovie] = useState({});
   const [loading, setLoading] = useState(true);
+  const [inputBusca, setInputBusca] = useState('');
 
   const navigation = useNavigation();
 
@@ -41,21 +42,21 @@ export default function Home() {
         api.get('/movie/now_playing', {
           params: {
             api_key: key,
-            language: 'pt-BR',
+            language: 'en-US',
             page: 1
           }
         }),
         api.get('/movie/popular', {
           params: {
             api_key: key,
-            language: 'pt-BR',
+            language: 'en-US',
             page: 1
           }
         }),
         api.get('/movie/top_rated', {
           params: {
             api_key: key,
-            language: 'pt-BR',
+            language: 'en-US',
             page: 1
           }
         })
@@ -87,6 +88,12 @@ export default function Home() {
     navigation.navigate('Detail', { id: item.id });
   }
 
+  function hancleInputBusca() {
+    if (inputBusca === '') return;
+    navigation.navigate('Search', { name: inputBusca });
+    setInputBusca('');
+  }
+
   if (loading) {
     return (
       <Container>
@@ -97,19 +104,21 @@ export default function Home() {
 
   return (
     <Container>
-      <Header title='React Prime' />
+      <Header title='My Movies' />
       <SearchContainer>
         <Input
           placeholder='Ex. The Avengers'
           placeholderTextColor='#ddd'
+          value={inputBusca}
+          onChangeText={(text) => setInputBusca(text)}
         />
-        <SearchButton>
+        <SearchButton onPress={hancleInputBusca}>
           <Feather name='search' size={30} color='#FFF' />
         </SearchButton>
       </SearchContainer>
       <ScrollView showsHorizontalScrollIndicator={false} >
 
-        <Title>Em Cartaz</Title>
+        <Title>Now Playing</Title>
         <BannerButton activeOpacity={0.9} onPress={() => navigateDetailPage(bannerMovie)}>
           <Banner
             resizeMethod='resize'
@@ -124,7 +133,7 @@ export default function Home() {
           keyExtractor={(item) => String(item.id)}
         />
 
-        <Title>Populares</Title>
+        <Title>Popular</Title>
         <SliderMovie
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -133,7 +142,7 @@ export default function Home() {
           keyExtractor={(item) => String(item.id)}
         />
 
-        <Title>Mais votados</Title>
+        <Title>Top Rated</Title>
         <SliderMovie
           horizontal={true}
           showsHorizontalScrollIndicator={false}
